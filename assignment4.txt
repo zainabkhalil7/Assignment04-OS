@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<pthread.h>
+#includ<stdlib.h>
+
+int i;
+int j;
+
+void* myThreadFunc(void* array)
+{
+	int *arr = (int*)array;
+	int sum = 0;
+	for(int i = 0;i<j;i++)
+	{
+		sum = sum + arr[i];
+	}
+	return ((void*)sum);
+}
+
+int main()
+{
+	
+	i = 0;
+	j = 100;
+	int sum = 0;
+	int array[1000];
+
+	for(int t = 0; t<1000;t++)
+	{
+		array[t] = t;
+	}
+
+	int threadsum[10] = { 0 };
+	
+	pthread_t thread[10];
+
+	for(int x = 0; x<10;x++)
+	{
+		pthread_create(&thread[x], NULL, &myThreadFunc, &array);
+		pthread_join(thread[x], (void**)&threadsum[x]);
+		j = j + 100;
+	}
+
+	for(int k = 0; k<10;k++)
+	{
+		sum = sum + threadsum[k];
+	}
+
+	printf("Sum is: %i",sum);
+
+	return 0;
+}
